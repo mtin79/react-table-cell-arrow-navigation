@@ -50,13 +50,27 @@ class Table extends React.Component {
             console.log("parentTdCell", parentTdCell);
 
             // Get next td cell:
-            const nextTdCell = parentTdCell.nextSibling;
+            let nextTdCell = parentTdCell.nextSibling;
             console.log("nextTdCell", nextTdCell);
 
             if (!!nextTdCell) {
-              const inputOfNextTdCell = nextTdCell.querySelector("input");
+              let inputOfNextTdCell = nextTdCell.querySelector("input");
+
               if (!!inputOfNextTdCell) {
                 inputOfNextTdCell.focus();
+                break;
+              }
+
+              while (!inputOfNextTdCell) {
+                nextTdCell = nextTdCell.nextSibling;
+                if (!!nextTdCell) {
+                  let inputOfNextTdCell = nextTdCell.querySelector("input");
+
+                  if (!!inputOfNextTdCell) {
+                    inputOfNextTdCell.focus();
+                    break;
+                  }
+                }
               }
             }
           }
