@@ -53,16 +53,21 @@ class Table extends React.Component {
             let nextTdCell = parentTdCell.nextSibling;
             console.log("nextTdCell", nextTdCell);
 
+            // If there's a next sibling ("Td" : table data - cell)
             if (!!nextTdCell) {
+              // Get the input element inside of the td - element:
               let inputOfNextTdCell = nextTdCell.querySelector("input");
 
+              // If the td cell has a child element of type input, focus it and terminate the switch-case:
               if (!!inputOfNextTdCell) {
                 inputOfNextTdCell.focus();
                 break;
               }
 
+              // When an input element couldn't be found, check if there's a next sibling (td-cell) to the currently checked one:
               while (!inputOfNextTdCell) {
                 nextTdCell = nextTdCell.nextSibling;
+                // If there's a next cell then check for an input element inside it and focus it if it exists, otherwise repeat the search:
                 if (!!nextTdCell) {
                   let inputOfNextTdCell = nextTdCell.querySelector("input");
 
@@ -86,13 +91,33 @@ class Table extends React.Component {
             console.log("parentTdCell", parentTdCell);
 
             // Get previous td cell:
-            const previousTdCell = parentTdCell.previousSibling;
+            let previousTdCell = parentTdCell.previousSibling;
             console.log("previousTdCell", previousTdCell);
 
+            // If there's a previous sibling ("Td" : table data - cell)
             if (!!previousTdCell) {
-              const inputOfNextTdCell = previousTdCell.querySelector("input");
-              if (!!inputOfNextTdCell) {
-                inputOfNextTdCell.focus();
+              // Get the input element inside of the td - element:
+              let inputOfPreviousTdCell = previousTdCell.querySelector("input");
+
+              if (!!inputOfPreviousTdCell) {
+                inputOfPreviousTdCell.focus();
+                break;
+              }
+
+              // When an input element couldn't be found, check if there's a next sibling (td-cell) to the currently checked one:
+              while (!inputOfPreviousTdCell) {
+                previousTdCell = previousTdCell.previousSibling;
+                // If there's a next cell then check for an input element inside it and focus it if it exists, otherwise repeat the search:
+                if (!!previousTdCell) {
+                  let inputOfPreviousTdCell = previousTdCell.querySelector(
+                    "input"
+                  );
+
+                  if (!!inputOfPreviousTdCell) {
+                    inputOfPreviousTdCell.focus();
+                    break;
+                  }
+                }
               }
             }
           }
