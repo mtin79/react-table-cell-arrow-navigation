@@ -75,6 +75,8 @@ class Table extends React.Component {
                     inputOfNextTdCell.focus();
                     break;
                   }
+                } else {
+                  break;
                 }
               }
             }
@@ -92,7 +94,7 @@ class Table extends React.Component {
 
             // Get previous td cell:
             let previousTdCell = parentTdCell.previousSibling;
-            console.log("previousTdCell", previousTdCell);
+            console.log("previousTdCell - first call:" + previousTdCell);
 
             // If there's a previous sibling ("Td" : table data - cell)
             if (!!previousTdCell) {
@@ -106,6 +108,8 @@ class Table extends React.Component {
 
               // When an input element couldn't be found, check if there's a next sibling (td-cell) to the currently checked one:
               while (!inputOfPreviousTdCell) {
+                console.log("previousTdCell - while loop:" + previousTdCell);
+
                 previousTdCell = previousTdCell.previousSibling;
                 // If there's a next cell then check for an input element inside it and focus it if it exists, otherwise repeat the search:
                 if (!!previousTdCell) {
@@ -115,6 +119,8 @@ class Table extends React.Component {
                     inputOfPreviousTdCell.focus();
                     break;
                   }
+                } else {
+                  break;
                 }
               }
             }
@@ -164,6 +170,8 @@ class Table extends React.Component {
                   tdInputCellAbove.focus();
                   break;
                 }
+              } else {
+                break;
               }
             }
           }
@@ -209,6 +217,8 @@ class Table extends React.Component {
                     tdInputCellBelow.focus();
                     break;
                   }
+                } else {
+                  break;
                 }
               }
             }
