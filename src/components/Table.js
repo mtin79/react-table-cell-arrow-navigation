@@ -109,9 +109,7 @@ class Table extends React.Component {
                 previousTdCell = previousTdCell.previousSibling;
                 // If there's a next cell then check for an input element inside it and focus it if it exists, otherwise repeat the search:
                 if (!!previousTdCell) {
-                  let inputOfPreviousTdCell = previousTdCell.querySelector(
-                    "input"
-                  );
+                  inputOfPreviousTdCell = previousTdCell.querySelector("input");
 
                   if (!!inputOfPreviousTdCell) {
                     inputOfPreviousTdCell.focus();
@@ -137,15 +135,36 @@ class Table extends React.Component {
           console.log("parentTableRow ", parentTableRow);
 
           // Get previous table row:
-          const previousTableRow = parentTableRow.previousSibling;
+          let previousTableRow = parentTableRow.previousSibling;
           console.log("previousTableRow ", previousTableRow);
 
+          // If there's a previous table row above the current one, then:
           if (!!previousTableRow) {
-            const tdCellAbove = previousTableRow.cells[
+            // Get the table cell in the previous table row in the same position as the original one:
+            let tdInputCellAbove = previousTableRow.cells[
               parentTdCellPosition
             ].querySelector("input");
-            if (!!tdCellAbove) {
-              tdCellAbove.focus();
+
+            // If there's an input field in the table data - cell above the current one, focus it and exit the switch-case:
+            if (!!tdInputCellAbove) {
+              tdInputCellAbove.focus();
+              break;
+            }
+
+            // If there wasn't an input in the table data - cell. Check the next previous row:
+            while (!tdInputCellAbove) {
+              previousTableRow = previousTableRow.previousSibling;
+              // If there's a next cell then check for an input element inside it and focus it if it exists, otherwise repeat the search:
+              if (!!previousTableRow) {
+                tdInputCellAbove = previousTableRow.cells[
+                  parentTdCellPosition
+                ].querySelector("input");
+
+                if (!!tdInputCellAbove) {
+                  tdInputCellAbove.focus();
+                  break;
+                }
+              }
             }
           }
 
@@ -165,15 +184,32 @@ class Table extends React.Component {
             console.log("parentTableRow ", parentTableRow);
 
             // Get previous table row:
-            const nextTableRow = parentTableRow.nextSibling;
+            let nextTableRow = parentTableRow.nextSibling;
             console.log("nextTableRow ", nextTableRow);
 
             if (!!nextTableRow) {
-              const tdCellAbove = nextTableRow.cells[
+              let tdInputCellBelow = nextTableRow.cells[
                 parentTdCellPosition
               ].querySelector("input");
-              if (!!tdCellAbove) {
-                tdCellAbove.focus();
+
+              if (!!tdInputCellBelow) {
+                tdInputCellBelow.focus();
+              }
+
+              // If there wasn't an input in the table data - cell. Check the next previous row:
+              while (!tdInputCellBelow) {
+                nextTableRow = nextTableRow.nextSibling;
+                // If there's a next cell then check for an input element inside it and focus it if it exists, otherwise repeat the search:
+                if (!!nextTableRow) {
+                  tdInputCellBelow = nextTableRow.cells[
+                    parentTdCellPosition
+                  ].querySelector("input");
+
+                  if (!!tdInputCellBelow) {
+                    tdInputCellBelow.focus();
+                    break;
+                  }
+                }
               }
             }
           }
